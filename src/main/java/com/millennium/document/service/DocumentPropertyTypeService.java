@@ -7,6 +7,7 @@ package com.millennium.document.service;
 
 import com.millennium.document.dto.DocumentPropertyTypeDTO;
 import com.millennium.document.entity.DocumentPropertyType;
+import com.millennium.document.entity.DocumentType;
 import com.millennium.document.repository.DocumentPropertyTypeRepository;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +28,10 @@ public class DocumentPropertyTypeService {
 
     public boolean saveOrUpdateDocumentPropertyType(DocumentPropertyTypeDTO documentPropertyTypeDTO) throws DataIntegrityViolationException, Exception {
         DocumentPropertyType documentPropertyType = new DocumentPropertyType();
+        DocumentType documentType = new DocumentType();
         BeanUtils.copyProperties(documentPropertyTypeDTO, documentPropertyType);
+        BeanUtils.copyProperties(documentPropertyTypeDTO.getDocumentTypeDTO(), documentType);
+        documentPropertyType.setDocumentType(documentType);
         documentPropertyTypeRepository.save(documentPropertyType);
         return true;
     }
